@@ -23,7 +23,7 @@ const ProductDetails = ({comment, addComment}: Props) => {
   const {
     params: {data},
   } = useRoute<any>();
-  const [text, setText] = useState<string>('');
+  const [text, setText] = useState<string | null>(null);
 
   useEffect(() => {
     const showSubscription = Keyboard.addListener('keyboardDidShow', () => {});
@@ -35,7 +35,7 @@ const ProductDetails = ({comment, addComment}: Props) => {
     };
   }, []);
   const dispatch = useDispatch();
-  console.log('text', text);
+  // console.log('text', text);
   const onChangeText = (t: string) => setText(t);
 
   const onSubmitText = useCallback(() => {
@@ -47,16 +47,10 @@ const ProductDetails = ({comment, addComment}: Props) => {
     [data.images],
   );
 
-  const productsComment = useMemo(
-    () => comment.find((commentary: any) => commentary.id === data.id),
-    [comment, data.id],
-  );
-  console.log('productsComment', productsComment);
   const textValue = useMemo(
-    () => (text.length ? text : productsComment?.content),
-    [text, productsComment?.content],
+    () => (text !== null ? text : comment[data.id]),
+    [comment, data.id, text],
   );
-  console.log('textValue', textValue);
 
   const renderItem = ({item}: {item: string}) => {
     return (
