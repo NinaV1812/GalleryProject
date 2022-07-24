@@ -4,7 +4,7 @@ import {RootState} from '../../store/index';
 import {addComment} from '../../store/action';
 
 const mapStateToProps = (state: RootState) => ({
-  comment: state.productReducer?.comment,
+  comments: state.productReducer?.comments,
 });
 
 const mapDispatchToProps = {

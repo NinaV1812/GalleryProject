@@ -16,10 +16,10 @@ import {styles, screen} from './ProductDetails.style';
 import {Images} from '../../store/types';
 
 interface Props {
-  comment: any;
+  comments: any;
   addComment: any;
 }
-const ProductDetails = ({comment, addComment}: Props) => {
+const ProductDetails = ({comments, addComment}: Props) => {
   const {
     params: {data},
   } = useRoute<any>();
@@ -35,7 +35,6 @@ const ProductDetails = ({comment, addComment}: Props) => {
     };
   }, []);
   const dispatch = useDispatch();
-  // console.log('text', text);
   const onChangeText = (t: string) => setText(t);
 
   const onSubmitText = useCallback(() => {
@@ -48,8 +47,8 @@ const ProductDetails = ({comment, addComment}: Props) => {
   );
 
   const textValue = useMemo(
-    () => (text !== null ? text : comment[data.id]),
-    [comment, data.id, text],
+    () => (text !== null ? text : comments[data.id]),
+    [comments, data.id, text],
   );
 
   const renderItem = ({item}: {item: string}) => {
