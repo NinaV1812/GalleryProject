@@ -1,41 +1,55 @@
 import React, {useCallback} from 'react';
-import {View, FlatList, Image, TouchableOpacity} from 'react-native';
+import {FlatList} from 'react-native';
 import {useNavigation} from '@react-navigation/native';
-import {Text} from '@rneui/themed';
 import {data} from '../data';
-import {styles} from './ProductsList.style';
 import {Product} from '../../store/types';
+import {
+  StyledView,
+  StyledText,
+  StyledImage,
+  StyledTouchableOpacity,
+} from '../../../styles';
 
 const ProductList = () => {
   const navigation = useNavigation();
 
   const renderItem = useCallback(
     ({item, index}: {item: Product; index: number}) => (
-      <TouchableOpacity
+      <StyledTouchableOpacity
         onPress={() =>
-          navigation.navigate('ProductDetails', {data: data?.[index]})
+          navigation.navigate(
+            'ProductDetails' as never,
+            {data: data?.[index]} as never,
+          )
         }
-        style={styles.productContainer}>
-        <Image
-          style={styles.image}
+        classes={[
+          'm:5',
+          'bg:indigo-300',
+          'p:5',
+          'justify:center',
+          'items:center',
+          'rounded:md',
+        ]}>
+        <StyledImage
+          classes={['w:40', 'h:40', 'rounded:md', 'resize:cover']}
           source={{uri: item?.images?.[0]?.thumb}}
-          resizeMode={'cover'}
         />
-        <Text h4 style={styles.titleText}>
+        <StyledText classes={['text:xl', 'color:gray-900', 'pb:2', 'pt:6']}>
           {item?.title}
-        </Text>
-        <Text h4 style={styles.priceText}>
+        </StyledText>
+        <StyledText classes={['text:2xl', 'color:gray-900', 'pb:2', 'pt:6']}>
           {item?.price} €
-        </Text>
-      </TouchableOpacity>
+        </StyledText>
+      </StyledTouchableOpacity>
     ),
     [navigation],
   );
 
   return (
-    <View style={styles.container}>
+    <StyledView
+      classes={['flex:1', 'bg:purple-100', 'justify:center', 'items:center']}>
       <FlatList data={data} renderItem={renderItem} />
-    </View>
+    </StyledView>
   );
 };
 export default ProductList;
